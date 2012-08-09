@@ -1,4 +1,4 @@
-package LogsReader;
+package parser;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -8,9 +8,7 @@ import java.io.PrintWriter;
 import java.util.Calendar;
 import java.util.LinkedList;
 
-public abstract class AbstractMessagesExtractor {
-	public abstract void extractMessagesToFile(File f) throws IOException;
-
+public abstract class AbstractLogParser implements ILogParser {	
 	protected void writeListToFile(LinkedList<String> listOfMessages, File sourceFile) throws IOException {
 		String tmp = sourceFile.getName();
 		tmp = tmp.substring(0, tmp.length() - 4);

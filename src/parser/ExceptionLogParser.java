@@ -1,4 +1,4 @@
-package LogsReader;
+package parser;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,7 +9,8 @@ import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ExceptionLogMessagesExtractor extends AbstractMessagesExtractor {
+
+public class ExceptionLogParser extends AbstractLogParser {
 	private static Pattern p = Pattern.compile("Send: (<.+?>)");
 
 	@Override

@@ -4,6 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import parser.AbstractLogParser;
+import parser.ILogParser;
+import parser.LogParserRegistry;
+
 public class Main {
 
 	public static void main(String[] args) throws IOException  {
@@ -14,7 +18,7 @@ public class Main {
 
 		
 		for(File f : listOfLogs ) {
-			AbstractMessagesExtractor extractor = ExtractorGetter.getExtractor(f);
+			ILogParser extractor = LogParserRegistry.getInstanceByFileName(f);
 			extractor.extractMessagesToFile(f);			
 		}
 	
