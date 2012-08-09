@@ -9,7 +9,6 @@ import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 public class ExceptionLogParser extends AbstractLogParser {
 	private static Pattern p = Pattern.compile("Send: (<.+?>)");
 
