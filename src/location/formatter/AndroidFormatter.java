@@ -1,7 +1,16 @@
-package parser;
+package location.formatter;
 
-public class LocationFormatter {
-	public static String format(ILocation l) {
+import location.ILocation;
+
+public class AndroidFormatter implements ILocationFormatter {
+	
+	
+	private static AndroidFormatter inst = new AndroidFormatter();	
+	public static ILocationFormatter getInstance() {
+		return inst;
+	}
+	
+	public String format(ILocation l) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<gps i=" + l.getImei() + " t=" + l.getTime() + " x="
 				+ l.getLon() + " y=" + l.getLat() + " z=" + l.getAlt() + " s="
@@ -17,4 +26,15 @@ public class LocationFormatter {
 
 		return sb.toString();
 	}
+
+	@Override
+	public String getName() {
+		return "android";		
+	}
+	
+	/*
+	static {
+		LocationFormatterRegistry.registerFormatter(getInstance());
+	}
+	*/
 }

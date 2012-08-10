@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import location.ILocation;
+import location.Location;
+
 public class ExceptionLogParser extends AbstractLogParser {
 	// private static Pattern p = Pattern.compile("Send: (<.+?>)");
 	// [18]Send: <gps i=356708044299665 t=1344422531980 x=30.25829432

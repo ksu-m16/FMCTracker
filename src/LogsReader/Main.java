@@ -12,10 +12,12 @@ import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
+import location.ILocation;
+import location.formatter.AndroidFormatter;
+
+
 import parser.AbstractLogParser;
-import parser.ILocation;
 import parser.ILogParser;
-import parser.LocationFormatter;
 import parser.LogParserRegistry;
 
 public class Main {
@@ -78,7 +80,7 @@ public class Main {
 		System.out.println("I wrire output to "
 				+ (new File(outputLogName)).getAbsolutePath());
 		for (ILocation loc : outLog) {
-			out1.println(LocationFormatter.format(loc));
+			out1.println(AndroidFormatter.format(loc));
 		}
 		out1.close();
 	}

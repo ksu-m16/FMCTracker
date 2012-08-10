@@ -1,4 +1,4 @@
-package parser;
+package location;
 
 public interface ILocation {
 

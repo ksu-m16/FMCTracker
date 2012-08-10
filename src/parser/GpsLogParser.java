@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import location.ILocation;
+import location.Location;
+
 public class GpsLogParser extends AbstractLogParser {
 	private static Pattern p = Pattern
 			.compile("(\"type\":\"gps\",\"imei\":\"(\\d+)\",\"time\":(\\d+),\"lon\":([\\d\\.]+),\"lat\":([\\d\\.]+),\"alt\":([\\d\\.]+),\"speed\":([\\d\\.]+),\"course\":([\\d\\.]+),\"accuracy\":([\\d\\.]+))");

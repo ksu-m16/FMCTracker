@@ -1,4 +1,4 @@
-package parser;
+package location;
 
 public class Location implements ILocation {
 	private long time;
