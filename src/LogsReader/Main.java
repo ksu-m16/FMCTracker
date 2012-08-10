@@ -14,6 +14,8 @@ import java.util.List;
 
 import location.ILocation;
 import location.formatter.AndroidFormatter;
+import location.formatter.ILocationFormatter;
+import location.formatter.LocationFormatterRegistry;
 
 
 import parser.AbstractLogParser;
@@ -28,6 +30,7 @@ public class Main {
 		// "e:\\MyDocuments\\Eclipse\\FMCTracker\\tracker_logs";
 		String sourceFolder = "w:\\Testing\\Selenium_Java\\eclipse_workspace\\xFMCTracker\\tracker_logs";
 
+		
 		List<File> listOfLogs = getListOfLogs(sourceFolder);
 
 		for (File f : listOfLogs) {
@@ -35,7 +38,17 @@ public class Main {
 			// extractor.extractMessagesToFile(f);
 			InputStream fi = new FileInputStream(f);
 
-			writeToFile(extractor.parse(fi), f);
+			ILocationFormatter formatter = LocationFormatterRegistry.getInstance("android");
+			List<ILocation> locs = extractor.parse(fi);
+			List<String> messages = new LinkedList<String>();
+			for (ILocation loc : locs) {
+				String message = formatter.format(loc);
+				messages.add(message);
+			}
+			
+			writeToFile(messages, f);
+			
+
 
 		}
 
@@ -61,9 +74,9 @@ public class Main {
 		return listOfLogs;
 	}
 
-	public static void writeToFile(List<ILocation> outLog, File sourceFile)
+	public static void writeToFile(List<String> out, File sourceFile)
 			throws IOException {
-		String tmp = sourceFile.getName();
+		String tmp = sourceFile.getAbsolutePath();
 		tmp = tmp.substring(0, tmp.length() - 4);
 		String outputLogName = tmp + ".csv";
 		if ((new File(outputLogName)).exists()) {
@@ -79,8 +92,9 @@ public class Main {
 				outputLogName)));
 		System.out.println("I wrire output to "
 				+ (new File(outputLogName)).getAbsolutePath());
-		for (ILocation loc : outLog) {
-			out1.println(AndroidFormatter.format(loc));
+		
+		for (String str : out) {
+			out1.println(str);
 		}
 		out1.close();
 	}
