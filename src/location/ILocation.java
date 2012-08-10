@@ -16,9 +16,9 @@ public interface ILocation {
 
 	public double getAccuracy();
 
-	public double getImei();
+	public String getImei();
 
-	public void setImei(double imei);
+	public void setImei(String imei);
 
 	public void setAccuracy(double accuracy);
 

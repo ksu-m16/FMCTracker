@@ -32,8 +32,8 @@ public class GpsLogParser extends AbstractLogParser {
 			Matcher m = p.matcher(line);
 			while (m.find()) {
 				ILocation loc = new Location();
-				loc.setImei(Double.parseDouble(m.group(2)));
-				loc.setTime((long) Double.parseDouble(m.group(3)));
+				loc.setImei(m.group(2));
+				loc.setTime((long)Double.parseDouble(m.group(3)));
 				loc.setLon(Double.parseDouble(m.group(4)));
 				loc.setLat(Double.parseDouble(m.group(5)));
 				loc.setAlt(Double.parseDouble(m.group(6)));

@@ -16,6 +16,7 @@ import location.ILocation;
 import location.formatter.AndroidFormatter;
 import location.formatter.ILocationFormatter;
 import location.formatter.LocationFormatterRegistry;
+import message.sender.MessageSender;
 
 
 import parser.AbstractLogParser;
@@ -48,7 +49,8 @@ public class Main {
 			
 			writeToFile(messages, f);
 			
-
+			MessageSender m = new MessageSender();
+			System.out.println(m.send(messages));
 
 		}
 
@@ -90,7 +92,7 @@ public class Main {
 
 		PrintWriter out1 = new PrintWriter(new BufferedWriter(new FileWriter(
 				outputLogName)));
-		System.out.println("I wrire output to "
+		System.out.println("I write output to "
 				+ (new File(outputLogName)).getAbsolutePath());
 		
 		for (String str : out) {

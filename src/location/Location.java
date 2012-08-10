@@ -8,7 +8,7 @@ public class Location implements ILocation {
 	private double speed;
 	private double course;
 	private double accuracy;
-	private double imei;
+	private String imei;
 
 	@Override
 	public long getTime() {
@@ -53,7 +53,7 @@ public class Location implements ILocation {
 	}
 
 	@Override
-	public double getImei() {
+	public String getImei() {
 		// TODO Auto-generated method stub
 		return this.imei;
 	}
@@ -94,7 +94,7 @@ public class Location implements ILocation {
 	}
 
 	@Override
-	public void setImei(double imei) {
+	public void setImei(String imei) {
 		this.imei = imei;
 	}
 
