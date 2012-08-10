@@ -7,7 +7,7 @@ import parser.ExceptionLogParser;
 import parser.GpsLogParser;
 
 public class LocationFormatterRegistry {
-	public static List<ILocationFormatter> formatters = new ArrayList();
+	public static List<ILocationFormatter> formatters = new ArrayList<ILocationFormatter>();
 	public static ILocationFormatter getAndroidInstance() {
 		return AndroidFormatter.getInstance();		
 	}
@@ -36,6 +36,10 @@ public class LocationFormatterRegistry {
 			names.add(f.getName());
 		}
 		return names;
+	}
+	
+	static {
+		registerFormatter(AndroidFormatter.getInstance());
 	}
 }
 

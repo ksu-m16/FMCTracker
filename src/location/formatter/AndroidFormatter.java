@@ -27,8 +27,6 @@ public class AndroidFormatter implements ILocationFormatter {
 		return "android";		
 	}
 	
-	static {
-		LocationFormatterRegistry.registerFormatter(getInstance());
-	}
+
 	
 }
