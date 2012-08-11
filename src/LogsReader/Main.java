@@ -16,6 +16,7 @@ import location.ILocation;
 import location.formatter.AndroidFormatter;
 import location.formatter.ILocationFormatter;
 import location.formatter.LocationFormatterRegistry;
+import location.modifier.LocationModifier;
 import message.sender.MessageSender;
 
 
@@ -41,11 +42,16 @@ public class Main {
 
 			ILocationFormatter formatter = LocationFormatterRegistry.getInstance("android");
 			List<ILocation> locs = extractor.parse(fi);
+			
+			List<ILocation> mlocs = LocationModifier.setImei("356708044299666", locs);
+			mlocs = LocationModifier.setStartTime(1344643200, mlocs);
+			
 			List<String> messages = new LinkedList<String>();
-			for (ILocation loc : locs) {
+			for (ILocation loc : mlocs) {
 				String message = formatter.format(loc);
 				messages.add(message);
 			}
+			
 			
 			writeToFile(messages, f);
 			

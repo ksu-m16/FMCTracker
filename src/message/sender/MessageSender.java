@@ -7,7 +7,8 @@ import java.net.UnknownHostException;
 import java.util.List;
 
 public class MessageSender {
-	private String host = "54.247.119.28";
+//	private String host = "54.247.119.28";
+	private String host = "50.19.246.128";
 	private int port = 6565;
 
 	public boolean send(List<String> messages) throws IOException {

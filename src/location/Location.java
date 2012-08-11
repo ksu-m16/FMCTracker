@@ -1,6 +1,6 @@
 package location;
 
-public class Location implements ILocation {
+public class Location implements ILocation, Cloneable {
 	private long time;
 	private double lat;
 	private double lon;
@@ -10,6 +10,18 @@ public class Location implements ILocation {
 	private double accuracy;
 	private String imei;
 
+	public ILocation clone(){
+		ILocation newLoc = new Location();
+		newLoc.setTime(time);
+		newLoc.setLat(lat);
+		newLoc.setLon(lon);
+		newLoc.setAlt(alt);
+		newLoc.setSpeed(speed);
+		newLoc.setCourse(course);
+		newLoc.setAccuracy(accuracy);
+		newLoc.setImei(imei);
+		return newLoc;
+	}
 	@Override
 	public long getTime() {
 		// TODO Auto-generated method stub

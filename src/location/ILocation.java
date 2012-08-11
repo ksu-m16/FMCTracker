@@ -1,6 +1,8 @@
 package location;
 
 public interface ILocation {
+	
+	public ILocation clone();
 
 	public long getTime();
 
@@ -33,4 +35,6 @@ public interface ILocation {
 	public void setLat(double lat);
 
 	public void setTime(long time);
+
+
 }
