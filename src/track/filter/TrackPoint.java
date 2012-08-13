@@ -32,7 +32,8 @@ public class TrackPoint {
 	}
 	
 	public ILocation getLocation() {
-		Location loc = new Location();
-		loc.
+		return new Location(imei, time, 
+			lat, lon, alt, 
+		    speed, course, accuracy);		
 	}	
 }
