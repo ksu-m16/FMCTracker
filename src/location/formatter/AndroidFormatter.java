@@ -12,7 +12,7 @@ public class AndroidFormatter implements ILocationFormatter {
 	
 	public String format(ILocation l) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("<gps i=" + l.getImei() + " t=" + l.getTime() + "000 x="
+		sb.append("<gps i=" + l.getImei() + " t=" + l.getTime() + " x="
 				+ l.getLon() + " y=" + l.getLat() + " z=" + l.getAlt() + " s="
 				+ l.getSpeed() + " c=" + l.getCourse() + " a="
 				+ l.getAccuracy() + ">");

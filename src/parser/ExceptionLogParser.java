@@ -33,8 +33,7 @@ public class ExceptionLogParser extends AbstractLogParser {
 			while (m.find()) {
 				ILocation loc = new Location();
 				loc.setImei(m.group(2));
-				String timems = m.group(3);
-				loc.setTime((long) Double.parseDouble(timems.substring(0,timems.length() - 3)));
+				loc.setTime((long) Double.parseDouble(m.group(3)));
 				loc.setLon(Double.parseDouble(m.group(4)));
 				loc.setLat(Double.parseDouble(m.group(5)));
 				loc.setAlt(Double.parseDouble(m.group(6)));
