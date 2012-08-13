@@ -27,7 +27,7 @@ public class FileLocationWriter extends AbstractLocationWriter {
 //		}
 
 		PrintWriter out1 = new PrintWriter(new BufferedWriter(new FileWriter(
-				targetFile)));
+				targetFile, true)));
 		System.out.println("I write output to "
 				+ targetFile.getAbsolutePath());
 		
