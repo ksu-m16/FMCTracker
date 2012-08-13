@@ -26,7 +26,5 @@ public class AndroidFormatter implements ILocationFormatter {
 	public String getName() {
 		return "android";		
 	}
-	
-
-	
 }
+

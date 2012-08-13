@@ -23,6 +23,9 @@ import message.sender.MessageSender;
 import parser.AbstractLogParser;
 import parser.ILogParser;
 import parser.LogParserRegistry;
+import track.filter.ImeiFilter;
+import track.filter.TimeFilter;
+import track.filter.TrackFilter;
 
 public class Main {
 
@@ -30,8 +33,8 @@ public class Main {
 
 		// String sourceFolder =
 		// "e:\\MyDocuments\\Eclipse\\FMCTracker\\tracker_logs";
-		String sourceFolder = "w:\\Testing\\Selenium_Java\\eclipse_workspace\\xFMCTracker\\tracker_logs";
-
+		String sourceFolder = ".\\tracker_logs";
+		
 		
 		List<File> listOfLogs = getListOfLogs(sourceFolder);
 
@@ -45,6 +48,13 @@ public class Main {
 			
 			List<ILocation> mlocs = LocationModifier.setImei("356708044299666", locs);
 			mlocs = LocationModifier.setStartTime(1344643200, mlocs);
+			
+			/*
+			TrackFilter tf = new TrackFilter();
+			tf.addFilter(new ImeiFilter("356708044299666"));
+			tf.addFilter(new TimeFilter(1344643200000L - locs.get(0).getTime()));
+			List<ILocation> mlocs = tf.filter(locs);
+			*/					
 			
 			List<String> messages = new LinkedList<String>();
 			for (ILocation loc : mlocs) {

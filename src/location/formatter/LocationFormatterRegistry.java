@@ -14,8 +14,7 @@ public class LocationFormatterRegistry {
 	
 	public static void registerFormatter(ILocationFormatter f){
 		formatters.add(f);
-	}
-	
+	}	
 	
 	public static ILocationFormatter getInstance(String formatterName){
 		for (ILocationFormatter f: formatters){

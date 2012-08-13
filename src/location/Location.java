@@ -9,6 +9,23 @@ public class Location implements ILocation, Cloneable {
 	private double course;
 	private double accuracy;
 	private String imei;
+	
+	public Location() {		
+	}
+	
+	public Location(String imei, long time, 
+		double lat, double lon, double alt,
+		double speed, double course, double accuracy) {
+		
+		this.imei = imei;
+		this.time = time;
+		this.lat = lat;
+		this.lon = lon;
+		this.alt = alt;
+		this.speed = speed;
+		this.course = course;
+		this.accuracy = accuracy;		
+	}
 
 	public ILocation clone(){
 		ILocation newLoc = new Location();
