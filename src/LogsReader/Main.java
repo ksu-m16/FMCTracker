@@ -11,21 +11,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
-
 import location.ILocation;
-import location.formatter.AndroidFormatter;
 import location.formatter.ILocationFormatter;
 import location.formatter.LocationFormatterRegistry;
-import location.modifier.LocationModifier;
 import message.sender.MessageSender;
-
-
-import parser.AbstractLogParser;
 import parser.ILogParser;
 import parser.LogParserRegistry;
-import track.filter.ImeiFilter;
-import track.filter.TimeFilter;
-import track.filter.TrackFilter;
+
 
 public class Main {
 
@@ -40,14 +32,10 @@ public class Main {
 
 		for (File f : listOfLogs) {
 			ILogParser extractor = LogParserRegistry.getInstanceByFileName(f);
-			// extractor.extractMessagesToFile(f);
 			InputStream fi = new FileInputStream(f);
 
 			ILocationFormatter formatter = LocationFormatterRegistry.getInstance("android");
 			List<ILocation> locs = extractor.parse(fi);
-			
-			List<ILocation> mlocs = LocationModifier.setImei("356708044299666", locs);
-			mlocs = LocationModifier.setStartTime(1344643200, mlocs);
 			
 			/*
 			TrackFilter tf = new TrackFilter();
@@ -57,9 +45,19 @@ public class Main {
 			*/					
 			
 			List<String> messages = new LinkedList<String>();
+			
+			// Send filtered data:
+			/*
 			for (ILocation loc : mlocs) {
 				String message = formatter.format(loc);
 				messages.add(message);
+			}
+			*/
+			
+			// Send raw data:
+			for (ILocation loc : locs) {
+			String message = formatter.format(loc);
+			messages.add(message);
 			}
 			
 			

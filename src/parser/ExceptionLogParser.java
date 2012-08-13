@@ -15,7 +15,7 @@ import location.ILocation;
 import location.Location;
 
 public class ExceptionLogParser extends AbstractLogParser {
-	// [18]Send: <gps i=356708044299665 t=1344422531980 x=30.25829432
+	// [18]Send: <gps i=356708044299665 t=1344422531980 x=30.25829432 
 	// y=59.94149352 z=32.9 s=0 c=0 a=227>
 
 	private static Pattern p = Pattern.compile("Send: (<gps i=(\\d+) t=(\\d+) "

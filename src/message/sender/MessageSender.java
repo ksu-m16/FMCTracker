@@ -29,7 +29,7 @@ public class MessageSender {
 		
 		for (String str : messages) {
 			os.write(str.getBytes());
-			System.out.println("I send message " + str);
+//			System.out.println("I send message " + str);
 		}
 
 		try {

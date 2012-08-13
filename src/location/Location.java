@@ -1,7 +1,7 @@
 package location;
 
 public class Location implements ILocation, Cloneable {
-	private long time;
+	private long time; //ms
 	private double lat;
 	private double lon;
 	private double alt;
