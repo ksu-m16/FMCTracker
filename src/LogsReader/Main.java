@@ -27,7 +27,7 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 		LocationLogProcessor processor = new LocationLogProcessor();
-		processor.setFileLocationWriter("myTest.csv", true);
+		processor.setFileLocationWriter("myTest.csv", false);
 		processor.setLocationFormatter("android");
 		processor.setSourceFolder(".\\tracker_logs");
 		

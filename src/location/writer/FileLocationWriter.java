@@ -11,12 +11,12 @@ import java.util.List;
 import location.ILocation;
 
 public class FileLocationWriter extends AbstractLocationWriter {
-	private File targetFile = new File("defaultOut.csv"); 
+	private String targetFileName = "defaultOut.csv"; 
 	private boolean append = true;
 	private int counter = 0;
 	
 	public FileLocationWriter(String targetFileName, boolean append) {
-		targetFile = new File(targetFileName);
+		this.targetFileName = targetFileName;
 		this.append = append;
 	}
 	
@@ -40,15 +40,15 @@ public class FileLocationWriter extends AbstractLocationWriter {
 
 	
 //			if (targetFile.exists()) { 
-		if(targetFile.getTotalSpace() > 0) {
-				if(!append){
-					String tmp = targetFile.getName();
-					tmp = tmp.substring(0,tmp.length() - 4) + counter +".csv";
-					targetFile = new File(tmp);
-					counter++;
-				}
+		File targetFile = new File(targetFileName);
+		
+		if(!append &&(new File(targetFileName)).exists()) {
+				String tmp = targetFileName;
+				tmp = tmp.substring(0,tmp.length() - 4) + counter +".csv";
+				targetFile = new File(tmp);
+				counter++;
 		}	
-//			else targetFile = new File("defaultOut.csv");
+
 			
 		PrintWriter out1 = new PrintWriter(new BufferedWriter(new FileWriter(
 				targetFile, append)));
@@ -61,8 +61,8 @@ public class FileLocationWriter extends AbstractLocationWriter {
 		out1.close();
 		return true;
 	}
-	public boolean setFile(File f) {
-		targetFile = f;
+	public boolean setTargetFileName(String targetFileName) {
+		this.targetFileName = targetFileName;
 		return true;
 	}
 
