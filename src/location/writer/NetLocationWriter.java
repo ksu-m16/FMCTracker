@@ -12,6 +12,16 @@ public class NetLocationWriter extends AbstractLocationWriter {
 	private String host = "50.19.246.128";
 	private int port = 6565;
 	
+	public NetLocationWriter(String host, int port) {
+		this.host = host;
+		this.port = port;
+	}
+	
+	public NetLocationWriter() {
+		// default host "50.19.246.128", port 6565
+	}
+	
+	
 	@Override
 	public boolean write(List<ILocation> locs) throws IOException {
 		Socket s;
