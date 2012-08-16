@@ -27,12 +27,12 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 		
-//		args = new String[]{"--source=.\\tracker_logs", 
-//				"--formatter=android", "--filter=imei,123", 
-//				"--writer=net,host=54.247.119.28,port=6565"};
 		args = new String[]{"--source=.\\tracker_logs", 
 				"--formatter=android", "--filter=imei,123", 
-				"--writer=file,mode=append,out=testt.csv"};
+				"--writer=net,host=54.247.119.28,port=6565"};
+//		args = new String[]{"--source=.\\tracker_logs", 
+//				"--formatter=android", "--filter=imei,123", 
+//				"--writer=file,mode=append,out=testt.csv"};
 		
 		
 //		LocationLogProcessor processor = new LocationLogProcessor();

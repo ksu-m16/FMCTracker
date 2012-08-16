@@ -147,19 +147,24 @@ public class LocationLogProcessor implements ILocationLogProcessor {
 					writer.setParamsFromString(param);
 					System.out.println("FileLocationWriter: " + writer.getTargetFileName() + 
 							", " + writer.getMode());
+					setLocationWriter(writer);
+					continue;
 				}
 				if (param.substring(param.indexOf("=") + 1, param.indexOf(",")).equals("net")){
 					NetLocationWriter writer = new NetLocationWriter();
 					writer.setParamsFromString(param);
 					System.out.println("NetLocationWriter: " + writer.getHost() + 
 							", " + writer.getPort());
+					setLocationWriter(writer);
+					continue;
 				}
+		
+				
 				else {
-					System.out.println("Unknown writer. Available writers: net, file");
+					System.out.println("Unknown writer. Available writers: net, file. \"" + param.substring(param.indexOf("=") + 1, param.indexOf(",")) + "\"");
 					return false;
 				}
-				setLocationWriter(writer);
-				continue;
+
 			}
 			if (param.startsWith("--filter")){
 				// don't forget to write smthng this about	
