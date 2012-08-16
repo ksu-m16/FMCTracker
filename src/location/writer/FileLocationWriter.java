@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,6 +25,12 @@ public class FileLocationWriter extends AbstractLocationWriter {
 	
 	public FileLocationWriter() {
 		// default name: "defaultOut.csv"; append = true 
+	}
+	
+	public static FileLocationWriter getInstance(Map<String, String> params) {
+		FileLocationWriter flw = new FileLocationWriter();
+		flw.setParamsFromMap(params);
+		return flw;
 	}
 
 	@Override
@@ -83,6 +90,30 @@ public class FileLocationWriter extends AbstractLocationWriter {
 					" mode=<new>|<append>), out=<filename>");
 			return false;
 		}
+	}
+	
+	public void setParamsFromMap(Map<String,String> params) {
+		String mode = "new";
+		if (params.containsKey("mode")) {
+			mode = params.get("mode");
+			if (mode == null) {
+				throw new IllegalArgumentException("empty mode parameter for writer");
+			}		
+			if (!mode.equals("append") && !mode.equals("new")) {
+				throw new IllegalArgumentException("invalid mode parameter for writer");
+			}
+		}
+		
+		String out = "output.csv";
+		if (params.containsKey("out")) {
+			out = params.get("out");
+			if (out == null) {
+				throw new IllegalArgumentException("empty output parameter for writer");
+			}		
+		}			
+		
+		append = mode.equals("append");
+		targetFileName = out;
 	}
 
 	public String getTargetFileName(){

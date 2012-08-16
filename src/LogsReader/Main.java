@@ -12,6 +12,8 @@ import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.JFrame;
+
 import location.ILocation;
 import location.formatter.ILocationFormatter;
 import location.formatter.LocationFormatterRegistry;
@@ -21,19 +23,25 @@ import location_log_processor.LocationLogProcessor;
 import message.sender.MessageSender;
 import parser.ILogParser;
 import parser.LogParserRegistry;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import javax.swing.JLabel;
+import java.awt.Insets;
+import java.awt.GridLayout;
 
 
-public class Main {
-
+public class Main extends JFrame {
 	public static void main(String[] args) throws IOException {
 		
 		args = new String[]{"--source=.\\tracker_logs", 
 				"--formatter=android", "--filter=imei,123", 
-				"--writer=net,host=54.247.119.28,port=6565"};
+				"--writer=file,mode=new,out=testt.csv"};
 //		args = new String[]{"--source=.\\tracker_logs", 
 //				"--formatter=android", "--filter=imei,123", 
 //				"--writer=file,mode=append,out=testt.csv"};
-		
+	
 		
 //		LocationLogProcessor processor = new LocationLogProcessor();
 //		processor.setFileLocationWriter("myTest.csv", false);
@@ -41,7 +49,14 @@ public class Main {
 //		processor.setSourceFolder(".\\tracker_logs");
 		
 		LocationLogProcessor processor = new LocationLogProcessor();
-		processor.parseParams(args);
+		
+		try {
+			processor.parseParams(args);
+		} catch (IllegalArgumentException ex) {
+			System.out.println("error parsing arguments");
+			System.out.println(ex.getMessage());
+			return;
+		}
 		
 		processor.run();
 //		List<File> listOfLogs = getListOfLogs(sourceFolder);

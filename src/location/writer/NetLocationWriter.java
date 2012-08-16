@@ -5,6 +5,7 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,6 +23,13 @@ public class NetLocationWriter extends AbstractLocationWriter {
 	public NetLocationWriter() {
 		// default host "50.19.246.128", port 6565
 	}
+	
+	public static NetLocationWriter getInstance(Map<String, String> params) {
+		NetLocationWriter nlw = new NetLocationWriter();
+		nlw.setParamsFromMap(params);
+		return nlw;
+	}
+	
 
 	@Override
 	public boolean write(List<ILocation> locs) throws IOException {
@@ -72,6 +80,27 @@ public class NetLocationWriter extends AbstractLocationWriter {
 			System.out.println("Wrong parameters. Possible params are:\n"
 					+ " host=<host>), port=<port>");
 			return false;
+		}
+	}
+	
+	public void setParamsFromMap(Map<String, String> params) {
+		String host = params.get("host");
+		String port = params.get("port");
+		if (host == null) {
+			throw new IllegalArgumentException(
+				"host parameter is not set for net writer");
+		}
+		if (port == null) {
+			throw new IllegalArgumentException(
+				"port parameter is not set for net writer");			
+		}
+		
+		try {
+			this.host = host;		
+			this.port = Integer.valueOf(port);
+		} catch (NumberFormatException ex) {
+			throw new IllegalArgumentException(
+				"host parameter should be a number");
 		}
 	}
 	

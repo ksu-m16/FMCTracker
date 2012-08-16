@@ -5,8 +5,14 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import javax.lang.model.element.Element;
 
 import parser.ILogParser;
 import parser.LogParserRegistry;
@@ -124,59 +130,104 @@ public class LocationLogProcessor implements ILocationLogProcessor {
 	}
 		return true;
 	}
-	public boolean parseParams(String[] args){
+	
+	
+	private Entry<String, String> parsePair(String pair) {		
+		int pos = pair.indexOf("=");
+		if (pos == -1) {			
+			return new AbstractMap.SimpleEntry<String, String>(pair, null);			
+		}
+		String key = pair.substring(0, pos);
+		String value = pair.substring(pos + 1);
+		return new AbstractMap.SimpleEntry<String, String>(key, value);
+	}
+	
+	private Map<String, String> parseParam(String param) {
+		if (!param.startsWith("--")) {
+			throw new IllegalArgumentException(
+				"parameter should start with --, got '" + param + "'");
+		}
+		
+		int pos = param.indexOf(",");
+		if (pos == -1) {
+			pos = param.length();
+		}
+		
+		String main = param.substring(2, pos);		
+		Map<String, String> args = new HashMap<String, String>();
+		Entry<String, String> me = parsePair(main);
+		args.put("_param", me.getKey());
+		args.put("_value", me.getValue());
+
+		if (pos >= param.length() - 1) {
+			return args;
+		}
+		String tail = param.substring(pos + 1);
+		
+		String[] subArgs = tail.split(",");
+		for (String arg : subArgs) {			
+			Entry<String, String> e = parsePair(arg);
+			args.put(e.getKey(), e.getValue());
+		}
+		
+		return args;
+	}
+	
+	private void throwIllegalArg(String name, String arg, String msg) {
+		throw new IllegalArgumentException("invalid --" + name 
+				+ " argument: '" + arg + "' : " + msg);
+	}
+	
+	public void parseParams(String[] args){
 		
 //		args = new String[]{"--source=a/b/c", 
 //				"--formatter=android", "--filter=imei,123", 
 //				"--writer=net,host=1.2.3.4,port=1234"};
 		
 		for (String param: args) {
-			if (param.startsWith("--source")){
-				setSourceFolder(param.substring(9, param.length()).trim());
-				System.out.println("Soutce folder: " + param.substring(9, param.length()).trim());
-				continue;
-			}
-			if (param.startsWith("--formatter")){
-				setLocationFormatter(param.substring(12, param.length()).trim());
-				System.out.println("Formatter: " + param.substring(12, param.length()).trim());
-				continue;
-			}
-			if (param.startsWith("--writer")){
-				if (param.substring(param.indexOf("=") + 1, param.indexOf(",")).equals("file")){
-					FileLocationWriter writer = new FileLocationWriter();
-					writer.setParamsFromString(param);
-					System.out.println("FileLocationWriter: " + writer.getTargetFileName() + 
-							", " + writer.getMode());
-					setLocationWriter(writer);
-					continue;
+			Map<String, String> arg = parseParam(param);
+			
+			String main = arg.get("_param");
+			String value = arg.get("_value");
+			
+			if (main.equals("source")) {				
+				if (value == null) {
+					throwIllegalArg("source", param, "source folder should be provided");
 				}
-				if (param.substring(param.indexOf("=") + 1, param.indexOf(",")).equals("net")){
-					NetLocationWriter writer = new NetLocationWriter();
-					writer.setParamsFromString(param);
-					System.out.println("NetLocationWriter: " + writer.getHost() + 
-							", " + writer.getPort());
-					setLocationWriter(writer);
-					continue;
-				}
-		
-				
-				else {
-					System.out.println("Unknown writer. Available writers: net, file. \"" + param.substring(param.indexOf("=") + 1, param.indexOf(",")) + "\"");
-					return false;
-				}
-
-			}
-			if (param.startsWith("--filter")){
-				// don't forget to write smthng this about	
+				setSourceFolder(value);
 				continue;
-			}
-			else {
-				System.out.println("Unknown parameter " + param + ". Try again :)");
-				return false;
 			}
 			
-		}
-		return true;
+			if (main.equals("formatter")) {				
+				if (value == null) {
+					throwIllegalArg("formatter", param, "formatter name should be provided");
+				}
+				setLocationFormatter(value);
+				continue;
+			}
+			if (main.equals("writer")){				
+				if (value == null) {
+					throwIllegalArg("writer", param, "writer name should be provided");
+				}								
+				if (value.equals("file")){
+					setLocationWriter(FileLocationWriter.getInstance(arg));
+					continue;
+				}
+				if (value.equals("net")){
+					setLocationWriter(NetLocationWriter.getInstance(arg));
+					continue;
+				}	
+				throwIllegalArg("writer", param, "specified writer not available");				
+			}
+			
+			if (param.startsWith("--filter")){
+				// don't forget to write smthng this about
+				// master yoda be with you
+				continue;
+			}
+			
+			throw new IllegalArgumentException("unknown argument '" + param + "'");											
+		}		
 	}
 	
 }
