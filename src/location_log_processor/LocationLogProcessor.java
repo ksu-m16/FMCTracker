@@ -38,7 +38,7 @@ public class LocationLogProcessor implements ILocationLogProcessor {
 	}
 
 	public boolean setLocationFormatter(String formatterName) {
-		formatter = LocationFormatterRegistry.getInstance("android");
+		formatter = LocationFormatterRegistry.getInstance(formatterName);
 		return true;
 	}
 
@@ -124,4 +124,54 @@ public class LocationLogProcessor implements ILocationLogProcessor {
 	}
 		return true;
 	}
+	public boolean parseParams(String[] args){
+		
+//		args = new String[]{"--source=a/b/c", 
+//				"--formatter=android", "--filter=imei,123", 
+//				"--writer=net,host=1.2.3.4,port=1234"};
+		
+		for (String param: args) {
+			if (param.startsWith("--source")){
+				setSourceFolder(param.substring(9, param.length()).trim());
+				System.out.println("Soutce folder: " + param.substring(9, param.length()).trim());
+				continue;
+			}
+			if (param.startsWith("--formatter")){
+				setLocationFormatter(param.substring(12, param.length()).trim());
+				System.out.println("Formatter: " + param.substring(12, param.length()).trim());
+				continue;
+			}
+			if (param.startsWith("--writer")){
+				if (param.substring(param.indexOf("=") + 1, param.indexOf(",")).equals("file")){
+					FileLocationWriter writer = new FileLocationWriter();
+					writer.setParamsFromString(param);
+					System.out.println("FileLocationWriter: " + writer.getTargetFileName() + 
+							", " + writer.getMode());
+				}
+				if (param.substring(param.indexOf("=") + 1, param.indexOf(",")).equals("net")){
+					NetLocationWriter writer = new NetLocationWriter();
+					writer.setParamsFromString(param);
+					System.out.println("NetLocationWriter: " + writer.getHost() + 
+							", " + writer.getPort());
+				}
+				else {
+					System.out.println("Unknown writer. Available writers: net, file");
+					return false;
+				}
+				setLocationWriter(writer);
+				continue;
+			}
+			if (param.startsWith("--filter")){
+				// don't forget to write smthng this about	
+				continue;
+			}
+			else {
+				System.out.println("Unknown parameter " + param + ". Try again :)");
+				return false;
+			}
+			
+		}
+		return true;
+	}
+	
 }

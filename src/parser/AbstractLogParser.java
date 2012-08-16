@@ -25,7 +25,7 @@ public abstract class AbstractLogParser implements ILogParser {
 
 		PrintWriter out1 = new PrintWriter(new BufferedWriter(new FileWriter(
 				outputLogName)));
-		System.out.println("I wrire output to "
+		System.out.println("I write output to "
 				+ (new File(outputLogName)).getAbsolutePath());
 		for (String s : listOfMessages) {
 			out1.println(s);

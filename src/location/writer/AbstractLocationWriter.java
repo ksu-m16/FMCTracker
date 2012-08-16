@@ -10,4 +10,5 @@ public abstract class AbstractLocationWriter implements ILocationWriter {
 		formatter = LocationFormatterRegistry.getInstance(formatterName);
 		return true;
 	 }
+	abstract public boolean setParamsFromString(String params);
 }
