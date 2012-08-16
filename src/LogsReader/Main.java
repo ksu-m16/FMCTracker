@@ -19,7 +19,7 @@ import location.formatter.ILocationFormatter;
 import location.formatter.LocationFormatterRegistry;
 import location.writer.FileLocationWriter;
 import location.writer.ILocationWriter;
-import location_log_processor.LocationLogProcessor;
+import log.processor.LocationLogProcessor;
 import message.sender.MessageSender;
 import parser.ILogParser;
 import parser.LogParserRegistry;

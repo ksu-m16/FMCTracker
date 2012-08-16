@@ -1,4 +1,4 @@
-package location_log_processor;
+package log.processor;
 
 import java.io.File;
 import java.io.FileInputStream;
