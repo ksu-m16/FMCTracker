@@ -16,26 +16,17 @@ public class ImeiFilter implements ITrackPointFilter {
 		return true;
 	}	
 	
-	public static ImeiFilter getInstance(Map<String, String> params) {
-		String newImei = "356708044299665";
-		if(params.size() != 1) {
-			throw new IllegalArgumentException("You should specify only one parameter: " +
-					"number=<imei>. ");
+	public static ImeiFilter getInstanceFromParameters(Map<String, String> params) {			
+		if(!params.containsKey("number")){
+			throw new IllegalArgumentException("You should specify number parameter in IMEI filter");		
 		}
-		if(params.containsKey("number")){
-			newImei = params.get("number");
-			if (newImei == null) {
-				throw new IllegalArgumentException("empty imei value");
-			}		
-			try{
-				Long.getLong(newImei);
-			}
-			catch (NumberFormatException ex) {
-				throw new IllegalArgumentException("Imei should be an int number!");
-			}
-		}
-		ImeiFilter ifilter = new ImeiFilter(newImei);
-		return ifilter;
+		
+		String newImei = params.get("number");
+		if (newImei == null) {
+			throw new IllegalArgumentException("empty imei value in IMEI filter");
+		}			
+				
+		return new ImeiFilter(newImei);
 	}
 }
 

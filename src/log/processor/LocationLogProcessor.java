@@ -34,7 +34,7 @@ public class LocationLogProcessor implements ILocationLogProcessor {
 	private String host;
 	private int port;
 	private ILocationFormatter formatter;
-	private TrackFilter trackfilter;
+	private TrackFilter trackfilter = new TrackFilter();
 
 	@Override
 	public boolean setSourceFolder(String sourceFolderPath) {
@@ -239,7 +239,7 @@ public class LocationLogProcessor implements ILocationLogProcessor {
 					throwIllegalArg("filter", param, "filter name should be provided");
 				}								
 				if (value.equals("imei")){
-					addFilter(ImeiFilter.getInstance(arg));
+					addFilter(ImeiFilter.getInstanceFromParameters(arg));
 					continue;
 				}
 				if (value.equals("time")){
