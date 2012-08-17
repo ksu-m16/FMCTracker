@@ -34,7 +34,7 @@ public class LocationLogProcessor implements ILocationLogProcessor {
 	private String host;
 	private int port;
 	private ILocationFormatter formatter;
-	private TrackFilter filter;
+	private TrackFilter trackfilter;
 
 	@Override
 	public boolean setSourceFolder(String sourceFolderPath) {
@@ -71,7 +71,7 @@ public class LocationLogProcessor implements ILocationLogProcessor {
 	}
 	
 	public boolean addFilter(ITrackPointFilter tf){
-		filter.addFilter(tf);
+		trackfilter.addFilter(tf);
 		return true;
 	}
 
@@ -104,6 +104,10 @@ public class LocationLogProcessor implements ILocationLogProcessor {
 			InputStream fi = new FileInputStream(f);
 
 			List<ILocation> locs = extractor.parse(fi);
+			
+			if (trackfilter != null) {
+				locs = trackfilter.filter(locs);
+			}
 			
 			writer.write(locs);
 			

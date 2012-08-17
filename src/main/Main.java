@@ -36,10 +36,10 @@ public class Main extends JFrame {
 	public static void main(String[] args) throws IOException {
 		
 		args = new String[]{"--source=.\\tracker_logs", 
-				"--formatter=android", "--filter=imei,123", 
+				"--formatter=android", "--filter=imei,number=123", 
 				"--writer=file,mode=new,out=testt.csv"};
 //		args = new String[]{"--source=.\\tracker_logs", 
-//				"--formatter=android", "--filter=imei,123", 
+//				"--formatter=android", "--filter=imei,number=123", 
 //				"--writer=file,mode=append,out=testt.csv"};
 	
 		
@@ -59,22 +59,7 @@ public class Main extends JFrame {
 		}
 		
 		processor.run();
-//		List<File> listOfLogs = getListOfLogs(sourceFolder);
-//		
-//		FileLocationWriter writer = new FileLocationWriter();
-//		writer.setFile(new File(sourceFolder + "\\test.csv"));
-//	
-//
-//		for (File f : listOfLogs) {
-//			ILogParser extractor = LogParserRegistry.getInstanceByFileName(f);
-//			InputStream fi = new FileInputStream(f);
-//
-////			ILocationFormatter formatter = LocationFormatterRegistry.getInstance("android");
-//			List<ILocation> locs = extractor.parse(fi);
-//			
-//			writer.write(locs);
-//			
-//			
+
 //			/*
 //			TrackFilter tf = new TrackFilter();
 //			tf.addFilter(new ImeiFilter("356708044299666"));
