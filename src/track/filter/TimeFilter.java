@@ -1,5 +1,8 @@
 package track.filter;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 public class TimeFilter implements ITrackPointFilter {	
@@ -38,27 +41,31 @@ public class TimeFilter implements ITrackPointFilter {
 		return currentFilter.apply(p);
 	}
 
-	public static ITrackPointFilter getInstance(Map<String, String> params) {
-		String startTime = String.valueOf(System.currentTimeMillis() / 1000 - 3600*24);
-		if(params.size() != 1) {
-			throw new IllegalArgumentException("You should specify only one parameter: " +
-					"startTime=<startTime>. ");
+	public static ITrackPointFilter getInstanceFromParameters(Map<String, String> params) {
+		if(! params.containsKey("start")){
+			throw new IllegalArgumentException("You should specify start time parameter in time filter");		
 		}
-
-		if(params.containsKey("start")){
-			startTime = params.get("start");
-			if (startTime == null) {
+		String startTime = params.get("start");
+		if (startTime == null) {
 				throw new IllegalArgumentException("empty start time value");
-			}		
-			try{
-				Long.getLong(startTime);
-			}
-			catch (NumberFormatException ex) {
+		}	
+		long ltime = 0;
+//		long ltime = Long.getLong(startTime);
+		
+		if (Long.getLong(startTime) != null){
+			ltime = Long.getLong(startTime);
+		}
+		if (Long.getLong(startTime) == null){
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			try {
+				Date date = formatter.parse(startTime);
+				ltime = date.getTime();
+			} catch (ParseException e) {
+				e.printStackTrace();
 				throw new IllegalArgumentException("Start time should be an int number!");
 			}
 		}
-		long ltime = Long.getLong(startTime);
-//		TimeFilter tfilter = new TimeFilter(ltime - locs.get(0).getTime());
+		
 		TimeFilter tfilter = new TimeFilter(ltime);
 		return tfilter;
 	}

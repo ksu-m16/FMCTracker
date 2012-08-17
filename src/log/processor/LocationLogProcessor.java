@@ -243,7 +243,7 @@ public class LocationLogProcessor implements ILocationLogProcessor {
 					continue;
 				}
 				if (value.equals("time")){
-					addFilter(TimeFilter.getInstance(arg));
+					addFilter(TimeFilter.getInstanceFromParameters(arg));
 					continue;
 				}	
 				throwIllegalArg("writer", param, "specified writer not available");		

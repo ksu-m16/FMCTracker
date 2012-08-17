@@ -59,7 +59,8 @@ public class Main extends JFrame {
 		
 		args = new String[]{"--source=.\\tracker_logs", 
 				"--formatter=android", "--filter=imei,number=123", 
-				"--writer=file,mode=new,out=testt.csv"};
+				"--writer=file,mode=new,out=testt.csv",
+				"--filter=time,start=2012-08-17 16:00:00"};
 
 //		args = new String[]{"--source=.\\tracker_logs", 
 //				"--formatter=android", "--filter=imei,number=123", 
