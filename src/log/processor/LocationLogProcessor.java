@@ -16,6 +16,10 @@ import javax.lang.model.element.Element;
 
 import parser.ILogParser;
 import parser.LogParserRegistry;
+import track.filter.ITrackPointFilter;
+import track.filter.ImeiFilter;
+import track.filter.TimeFilter;
+import track.filter.TrackFilter;
 
 import location.ILocation;
 import location.formatter.ILocationFormatter;
@@ -30,6 +34,7 @@ public class LocationLogProcessor implements ILocationLogProcessor {
 	private String host;
 	private int port;
 	private ILocationFormatter formatter;
+	private TrackFilter filter;
 
 	@Override
 	public boolean setSourceFolder(String sourceFolderPath) {
@@ -62,6 +67,11 @@ public class LocationLogProcessor implements ILocationLogProcessor {
 
 	public boolean setFileLocationWriter(String targetFileName, boolean append) {
 		writer = new FileLocationWriter(targetFileName, append);
+		return true;
+	}
+	
+	public boolean addFilter(ITrackPointFilter tf){
+		filter.addFilter(tf);
 		return true;
 	}
 
@@ -220,10 +230,19 @@ public class LocationLogProcessor implements ILocationLogProcessor {
 				throwIllegalArg("writer", param, "specified writer not available");				
 			}
 			
-			if (param.startsWith("--filter")){
-				// don't forget to write smthng this about
-				// master yoda be with you
-				continue;
+			if (main.equals("filter")){
+				if (value == null) {
+					throwIllegalArg("filter", param, "filter name should be provided");
+				}								
+				if (value.equals("imei")){
+					addFilter(ImeiFilter.getInstance(arg));
+					continue;
+				}
+				if (value.equals("time")){
+					addFilter(TimeFilter.getInstance(arg));
+					continue;
+				}	
+				throwIllegalArg("writer", param, "specified writer not available");		
 			}
 			
 			throw new IllegalArgumentException("unknown argument '" + param + "'");											
