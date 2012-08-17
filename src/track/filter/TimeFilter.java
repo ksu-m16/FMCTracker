@@ -2,8 +2,8 @@ package track.filter;
 
 import java.util.Map;
 
-public class TimeFilter implements ITrackPointFilter {
-	long delta = 0;
+public class TimeFilter implements ITrackPointFilter {	
+	private long delta;
 	private long startTime;
 
 //	public TimeFilter(long delta) {
@@ -13,11 +13,29 @@ public class TimeFilter implements ITrackPointFilter {
 	public TimeFilter(long startTime){
 		this.startTime = startTime;
 	}
+		
+	ITrackPointFilter startFilter = new ITrackPointFilter() {		
+		@Override
+		public boolean apply(TrackPoint p) {
+			if (startTime != 0) {
+				delta = startTime - p.time;
+			}
+			currentFilter = continueFilter;
+			return continueFilter.apply(p);
+		}
+	};
+	ITrackPointFilter continueFilter = new ITrackPointFilter() {			
+		@Override
+		public boolean apply(TrackPoint p) {
+			p.time += delta;
+			return true;
+		}
+	};
+	ITrackPointFilter currentFilter = startFilter;
 	
 	@Override
 	public boolean apply(TrackPoint p) {
-		p.time += delta;
-		return true;
+		return currentFilter.apply(p);
 	}
 
 	public static ITrackPointFilter getInstance(Map<String, String> params) {

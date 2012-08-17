@@ -7,8 +7,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -30,14 +34,33 @@ import java.awt.GridBagConstraints;
 import javax.swing.JLabel;
 import java.awt.Insets;
 import java.awt.GridLayout;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 
 public class Main extends JFrame {
+	public Main() {		
+	}
 	public static void main(String[] args) throws IOException {
+		
+/*		
+ * How it should be done
+ * и еще хочу автоопределение Unix time и даты в заданном формате.
+ * 
+ * 	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		try {
+			Date date = formatter.parse("2012-08-17 17:29:00");
+			System.out.println(date.getTime() - System.currentTimeMillis());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}*/
+				
 		
 		args = new String[]{"--source=.\\tracker_logs", 
 				"--formatter=android", "--filter=imei,number=123", 
 				"--writer=file,mode=new,out=testt.csv"};
+
 //		args = new String[]{"--source=.\\tracker_logs", 
 //				"--formatter=android", "--filter=imei,number=123", 
 //				"--writer=file,mode=append,out=testt.csv"};
@@ -45,12 +68,14 @@ public class Main extends JFrame {
 		
 //		LocationLogProcessor processor = new LocationLogProcessor();
 //		processor.setFileLocationWriter("myTest.csv", false);
+		//My mega code!!!		
 //		processor.setLocationFormatter("android");
 //		processor.setSourceFolder(".\\tracker_logs");
 		
+		
 		LocationLogProcessor processor = new LocationLogProcessor();
 		
-		try {
+		try {			
 			processor.parseParams(args);
 		} catch (IllegalArgumentException ex) {
 			System.out.println("error parsing arguments");

@@ -14,10 +14,6 @@ public class TrackFilter {
 	}
 	
 	public List<ILocation> filter(List<ILocation> track) {
-		
-//		long logStartTime = track.get(0).getTime();
-		
-		
 		List<ILocation> result = new ArrayList<ILocation>();
 		TrackPoint tp = new TrackPoint();
 				

@@ -26,7 +26,6 @@ public class LocationFormatterRegistry {
 //		if (formatterName.equals("android")) {
 //			return new AndroidFormatter();
 //		}
-		System.out.println("Oops! Unknown formatter type.");
 		return null;
 	}
 	public static List<String> getFormatterNames(){
