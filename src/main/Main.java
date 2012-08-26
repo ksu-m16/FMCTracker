@@ -57,22 +57,15 @@ public class Main extends JFrame {
 		}*/
 				
 		
-		args = new String[]{"--source=.\\tracker_logs", 
-				"--formatter=android", "--filter=imei,number=123", 
-				"--writer=file,mode=new,out=testt.csv",
-				"--filter=time,start=2012-08-17 16:00:00"};
+//		args = new String[]{"--source=.\\tracker_logs", 
+//				"--formatter=android", "--filter=imei,number=123", 
+//				"--writer=file,mode=new,out=testt.csv",
+//				"--filter=time,start=2012-08-17 16:00:00"};
 
 //		args = new String[]{"--source=.\\tracker_logs", 
 //				"--formatter=android", "--filter=imei,number=123", 
 //				"--writer=file,mode=append,out=testt.csv"};
 	
-		
-//		LocationLogProcessor processor = new LocationLogProcessor();
-//		processor.setFileLocationWriter("myTest.csv", false);
-		//My mega code!!!		
-//		processor.setLocationFormatter("android");
-//		processor.setSourceFolder(".\\tracker_logs");
-		
 		
 		LocationLogProcessor processor = new LocationLogProcessor();
 		
@@ -84,8 +77,18 @@ public class Main extends JFrame {
 			return;
 		}
 		
-		processor.run();
-
+		if (!processor.isHelpMode()){
+			try {
+				processor.run();
+			}
+			catch (IllegalArgumentException e) {
+				System.out.println(e.getMessage());
+			}
+			catch (NullPointerException e) {
+				System.out.println(e.getMessage());
+				processor.getHelp();
+			}
+		}
 //			/*
 //			TrackFilter tf = new TrackFilter();
 //			tf.addFilter(new ImeiFilter("356708044299666"));
@@ -139,28 +142,5 @@ public class Main extends JFrame {
 //		return listOfLogs;
 //	}
 
-//	public static void writeToFile(List<String> out, File sourceFile)
-//			throws IOException {
-//		String tmp = sourceFile.getAbsolutePath();
-//		tmp = tmp.substring(0, tmp.length() - 4);
-//		String outputLogName = tmp + ".csv";
-//		if ((new File(outputLogName)).exists()) {
-//			Calendar rightNow = Calendar.getInstance();
-//			outputLogName = tmp + rightNow.get(Calendar.YEAR)
-//					+ rightNow.get(Calendar.MONTH)
-//					+ rightNow.get(Calendar.DAY_OF_MONTH)
-//					+ rightNow.get(Calendar.HOUR)
-//					+ rightNow.get(Calendar.MINUTE) + ".csv";
-//		}
 //
-//		PrintWriter out1 = new PrintWriter(new BufferedWriter(new FileWriter(
-//				outputLogName)));
-//		System.out.println("I write output to "
-//				+ (new File(outputLogName)).getAbsolutePath());
-//		
-//		for (String str : out) {
-//			out1.println(str);
-//		}
-//		out1.close();
-//	}
 }
