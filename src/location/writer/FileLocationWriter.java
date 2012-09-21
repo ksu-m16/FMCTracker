@@ -34,7 +34,7 @@ public class FileLocationWriter extends AbstractLocationWriter {
 	}
 
 	@Override
-	public boolean write(List<ILocation> locs) throws IOException {
+	public void write(List<ILocation> locs) throws IOException {
 //		String tmp = sourceFile.getAbsolutePath();
 //		tmp = tmp.substring(0, tmp.length() - 4);
 //		String outputLogName = tmp + ".csv";
@@ -68,7 +68,6 @@ public class FileLocationWriter extends AbstractLocationWriter {
 			out1.println(formatter.format(l));
 		}
 		out1.close();
-		return true;
 	}
 	public boolean setTargetFileName(String targetFileName) {
 		this.targetFileName = targetFileName;
@@ -76,19 +75,17 @@ public class FileLocationWriter extends AbstractLocationWriter {
 	}
 
 	@Override
-	public boolean setParamsFromString(String params) {
+	public void setParamsFromString(String params) {
 //		--writer=file,mode=new | mode=append, out = filename
 		Pattern p = Pattern.compile("mode\\s{0,100}=\\s{0,100}(new|append),\\s{0,100}out\\s{0,100}=\\s{0,100}((\\w+\\.?\\w+)|(\\w+))");
 		Matcher m = p.matcher(params);
 		if (m.find()){
 			append = m.group(1).equals("new")? false : true;
 			targetFileName = m.group(2);
-			return true;
 		}
 		else {
 			System.out.println("Wrong parameters. Possible params are:\n" +
 					" mode=<new>|<append>), out=<filename>");
-			return false;
 		}
 	}
 	

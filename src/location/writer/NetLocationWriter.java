@@ -32,21 +32,22 @@ public class NetLocationWriter extends AbstractLocationWriter {
 	
 
 	@Override
-	public boolean write(List<ILocation> locs) throws IOException {
+	public void write(List<ILocation> locs) throws IOException {
 		Socket s;
 		try {
 			s = new Socket(host, port);
-			System.out.println("socket ok");
+			System.out.println("socket ok: " + host + ", " + port);
 		} catch (UnknownHostException ex) {
 			System.out.println(ex.getMessage());
-			return false;
+			return;
+
 		} catch (IOException ex) {
 			System.out.println(ex.getMessage());
-			return false;
+			return;
 		}
 
 		OutputStream os = s.getOutputStream();
-		System.out.println("OutputStream ok");
+//		System.out.println("OutputStream ok");
 
 		for (ILocation l : locs) {
 			os.write(formatter.format(l).getBytes());
@@ -56,9 +57,9 @@ public class NetLocationWriter extends AbstractLocationWriter {
 			s.close();
 		} catch (IOException ex) {
 			System.out.println(ex.getMessage());
-			return false;
+			return;
 		}
-		return true;
+
 	}
 
 	public void setParameters(String host, int port) {
@@ -67,7 +68,7 @@ public class NetLocationWriter extends AbstractLocationWriter {
 	}
 
 	@Override
-	public boolean setParamsFromString(String params) {
+	public void setParamsFromString(String params) {
 		// --writer=net,host=1.2.3.4,port=1234
 		Pattern p = Pattern
 				.compile("host\\s{0,100}=\\s{0,100}([\\d\\.]+?),\\s{0,100}port\\s{0,100}=\\s{0,100}(\\d+)");
@@ -75,11 +76,9 @@ public class NetLocationWriter extends AbstractLocationWriter {
 		if (m.find()) {
 			host = m.group(1);
 			port = (int) Integer.valueOf(m.group(2));
-			return true;
 		} else {
 			System.out.println("Wrong parameters. Possible params are:\n"
 					+ " host=<host>), port=<port>");
-			return false;
 		}
 	}
 	

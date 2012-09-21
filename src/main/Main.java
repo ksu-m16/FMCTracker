@@ -66,6 +66,8 @@ public class Main extends JFrame {
 //				"--formatter=android", "--filter=imei,number=123", 
 //				"--writer=file,mode=append,out=testt.csv"};
 	
+//		args = new String[]{"--writer=net"};
+		
 		
 		LocationLogProcessor processor = new LocationLogProcessor();
 		
@@ -121,26 +123,4 @@ public class Main extends JFrame {
 //		}
 //
 	}
-//
-//	public static List<File> getListOfLogs(String curDir) {
-//		System.out.println(curDir);
-//		File curDirFile = new File(curDir);
-//		String[] list = curDirFile.list();
-//
-//		List<File> listOfLogs = new ArrayList<File>();
-//		for (String str : list) {
-//			File curElt = new File(curDir + File.separator + str);
-//
-//			if (curElt.isDirectory()) {
-//				getListOfLogs(curElt.getAbsolutePath());
-//			}
-//			if (str.endsWith(".txt")) {
-//				listOfLogs.add(curElt);
-//				System.out.println(curElt.getAbsolutePath());
-//			}
-//		}
-//		return listOfLogs;
-//	}
-
-//
 }

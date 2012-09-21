@@ -6,8 +6,8 @@ import location.formatter.ILocationFormatter;
 import location.writer.ILocationWriter;
 
 public interface ILocationLogProcessor {
-	public boolean setSourceFolder(String sourceFolderPath);
-	public boolean setLocationFormatter(ILocationFormatter formatter);
-	public boolean setLocationWriter(ILocationWriter writer);
-	public boolean run() throws IOException;
+	public void setSourceFolder(String sourceFolderPath);
+	public void setLocationFormatter(ILocationFormatter formatter);
+	public void setLocationWriter(ILocationWriter writer);
+	public void run() throws IOException;
 }

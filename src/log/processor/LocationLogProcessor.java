@@ -31,22 +31,20 @@ import location.writer.NetLocationWriter;
 public class LocationLogProcessor implements ILocationLogProcessor {
 	private ILocationWriter writer;
 	private File sourceFolder;
-	private String host;
-	private int port;
 	private ILocationFormatter formatter;
 	private TrackFilter trackfilter = new TrackFilter();
 	private boolean helpMode;
+	List<File> listOfLogs = new ArrayList<File>();
+	
 
 	@Override
-	public boolean setSourceFolder(String sourceFolderPath) {
+	public void setSourceFolder(String sourceFolderPath) {
 		sourceFolder = new File(sourceFolderPath);
-		return true;
 	}
 
 	@Override
-	public boolean setLocationFormatter(ILocationFormatter formatter) {
+	public void setLocationFormatter(ILocationFormatter formatter) {
 		this.formatter = formatter;
-		return true;
 	}
 
 	public boolean setLocationFormatter(String formatterName) {
@@ -55,32 +53,26 @@ public class LocationLogProcessor implements ILocationLogProcessor {
 	}
 
 	@Override
-	public boolean setLocationWriter(ILocationWriter writer) {
+	public void setLocationWriter(ILocationWriter writer) {
 		this.writer = writer;
-		return true;
 	}
 
-	public boolean setNetLocationWriter(String host, int port) {
+	public void setNetLocationWriter(String host, int port) {
 		writer = new NetLocationWriter(host, port);
-		return true;
-
 	}
 
-	public boolean setFileLocationWriter(String targetFileName, boolean append) {
+	public void setFileLocationWriter(String targetFileName, boolean append) {
 		writer = new FileLocationWriter(targetFileName, append);
-		return true;
 	}
 	
-	public boolean addFilter(ITrackPointFilter tf){
+	public void addFilter(ITrackPointFilter tf){
 		trackfilter.addFilter(tf);
-		return true;
 	}
 
 	private List<File> getListOfLogs(String curDir) {
-		System.out.println(curDir);
+//		System.out.println(curDir);
 			File curDirFile = new File(curDir);
 			String[] list = curDirFile.list();
-			List<File> listOfLogs = new ArrayList<File>();
 			for (String str : list) {
 				File curElt = new File(curDir + File.separator + str);
 
@@ -96,24 +88,28 @@ public class LocationLogProcessor implements ILocationLogProcessor {
 	}
 	
 	@Override
-	public boolean run() throws IOException {
+	public void run() throws IOException {
 		List<File> listOfLogs;
-		if (sourceFolder == null) {
-			throw new NullPointerException("Sourcefolder name should be provided.");
-		}
+//		if (sourceFolder == null) {
+//			throw new NullPointerException("Sourcefolder name should be provided.");
+//		}
 		if (writer == null){
 			throw new NullPointerException("Writer name (file | net) should be provided.");
 		}
-		if (formatter == null){
-			throw new NullPointerException("Writer name (\"android\") should be provided.");
-		}
+//		if (formatter == null){
+//			throw new NullPointerException("Writer name (\"android\") should be provided.");
+//		}
 		
 		try {
 			listOfLogs = getListOfLogs(sourceFolder.getAbsolutePath());
+			
 		}
 		catch (NullPointerException e) {
 			throw new IllegalArgumentException("Sourcefolder name " + sourceFolder + " is not valid.");
 		}
+		
+		System.out.println(listOfLogs.size());
+		System.out.println(sourceFolder);
 		
 		for (File f : listOfLogs) {
 			ILogParser extractor = LogParserRegistry.getInstanceByFileName(f);
@@ -158,7 +154,7 @@ public class LocationLogProcessor implements ILocationLogProcessor {
 //			System.out.println(m.send(messages));
 
 	}
-		return true;
+		System.out.println("Finished.");
 	}
 	
 	
@@ -277,7 +273,19 @@ public class LocationLogProcessor implements ILocationLogProcessor {
 
 			
 			throw new IllegalArgumentException("unknown argument '" + param + "'");											
-		}		
+		}	
+		
+		if (sourceFolder == null) {
+			sourceFolder = new File(System.getProperty("user.dir"));
+			System.out.println("Current folder set as source folder (by default);");
+		}
+		if (formatter == null){
+			setLocationFormatter("android");
+			System.out.println("Android formatter set (by default);");
+		}
+		
+		
+		
 	}
 
 	public boolean isHelpMode() {
@@ -285,11 +293,12 @@ public class LocationLogProcessor implements ILocationLogProcessor {
 	}
 	public void getHelp(){
 		System.out.println("Enter parameters:");
-		System.out.println("--source=sourcelogs\\folder\\path;");
-		System.out.println("--formatter=android;");
 		System.out.println("--writer:");
 		System.out.println("\t--writer=file,mode=(new | append),out=testt.csv");
 		System.out.println("\t--writer=net,host=1.2.3.4,port=1234");
+		System.out.println("Optional:");
+		System.out.println("--source=sourcelogs\\folder\\path (default - current folder);");
+		System.out.println("--formatter=android (default value);");
 		System.out.println("--filter (optional): \n\t--filter=imei,number=123;");
 		System.out.println("\t--filter=time,start=2012-08-17 16:00:00");
 	}

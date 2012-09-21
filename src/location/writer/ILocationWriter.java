@@ -6,5 +6,5 @@ import java.util.List;
 import location.ILocation;
 
 public interface ILocationWriter {
-    public boolean write(List<ILocation> locs) throws IOException;
+    public void write(List<ILocation> locs) throws IOException;
 }
