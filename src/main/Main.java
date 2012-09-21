@@ -66,7 +66,7 @@ public class Main extends JFrame {
 //				"--formatter=android", "--filter=imei,number=123", 
 //				"--writer=file,mode=append,out=testt.csv"};
 	
-//		args = new String[]{"--writer=net"};
+//		args = new String[]{"--writer=net,host=50.19.246.128"};
 		
 		
 		LocationLogProcessor processor = new LocationLogProcessor();

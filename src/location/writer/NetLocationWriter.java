@@ -12,8 +12,8 @@ import java.util.regex.Pattern;
 import location.ILocation;
 
 public class NetLocationWriter extends AbstractLocationWriter {
-	private String host = "50.19.246.128";
-	private int port = 6565;
+	private String host;
+	private int port;
 
 	public NetLocationWriter(String host, int port) {
 		this.host = host;
@@ -90,8 +90,8 @@ public class NetLocationWriter extends AbstractLocationWriter {
 				"host parameter is not set for net writer");
 		}
 		if (port == null) {
-			throw new IllegalArgumentException(
-				"port parameter is not set for net writer");			
+			port = "6565";
+			System.out.println("No port value specified. Port set by default to 6565 - android tracker port.");			
 		}
 		
 		try {
